@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -44,5 +45,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function examAttempts()
+    {
+        return $this->hasMany(ExamAttempt::class);
+    }
+
+    public function hasAttemptedExam($examId)
+    {
+        return $this->examAttempts()->where('exam_id', $examId)->exists();
     }
 }
